@@ -20,7 +20,9 @@ public class LocalRandomCoordinateController extends LocalCoordinateController
 //			target.random();
 //			ok = this.empty(target);
 //		} while (!ok);
-		return RobotStrategy.miniMax(this.getGame());
+		Game game = this.getGame().deepClone();
+		Coordinate target = RobotStrategy.miniMax(game);
+		return target;
 	}
 
 	@Override

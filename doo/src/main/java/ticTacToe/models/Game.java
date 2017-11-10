@@ -90,4 +90,12 @@ public class Game implements Serializable {
         return null;
     }
 
+    public void reset() {
+        turn.reset();
+    }
+
+    public Color getWinner() {
+        return board.getWinner();
+    }
+
 }

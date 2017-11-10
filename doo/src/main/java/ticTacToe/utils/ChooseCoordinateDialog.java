@@ -18,7 +18,7 @@ public class ChooseCoordinateDialog {
     private boolean isValid(String s) {
         int row, column;
         int[] array;
-        ClosedInterval closedInterval = new ClosedInterval(0, ticTacToe.models.Coordinate.DIMENSION);
+        ClosedInterval closedInterval = new ClosedInterval(0, ticTacToe.models.Coordinate.DIMENSION-1);
         try {
             array = parseString(s);
             row = array[0];

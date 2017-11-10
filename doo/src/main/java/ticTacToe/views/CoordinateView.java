@@ -30,7 +30,8 @@ class CoordinateView {
 
 	void write(String title, Coordinate coordinate) {
 		assert title != null;
-		assert coordinate != null;
+		if(coordinate == null)
+			return;
 		IO.instance().write(
 				title + "[" + (coordinate.getRow()) + ", "
 						+ (coordinate.getColumn()) + "]");

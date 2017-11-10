@@ -55,7 +55,7 @@ class AlphaBetaAdvanced {
      * @return              the score of the board
      */
     private static int alphaBetaPruning (Color player, Game board, double alpha, double beta, int currentPly) {
-        if (currentPly++ == maxPly || board.existTicTacToe()) {
+        if (currentPly++ == maxPly || board.existTicTacToe() || board.complete()) {
             return score(player, board, currentPly);
         }
 
@@ -79,7 +79,6 @@ class AlphaBetaAdvanced {
         Coordinate indexOfBestMove = null;
 
         for (Coordinate theMove : board.emptyCoordinates()) {
-            System.out.println("get max : " + theMove);
             Game modifiedBoard = board.deepClone();
             modifiedBoard.put(theMove);
             modifiedBoard.change();
@@ -96,12 +95,10 @@ class AlphaBetaAdvanced {
         }
 
         if (indexOfBestMove != null) {
-            System.out.println("move to :" + indexOfBestMove);
             board.put(indexOfBestMove);
             board.change();
             perfectCoordinate = indexOfBestMove;
         }
-        System.out.println("max alpha: "+ alpha);
         return (int)alpha;
     }
 
@@ -118,7 +115,6 @@ class AlphaBetaAdvanced {
         Coordinate indexOfBestMove = null;
 
         for (Coordinate theMove : board.emptyCoordinates()) {
-            System.out.println("get min : " + theMove);
             Game modifiedBoard = board.deepClone();
             modifiedBoard.put(theMove);
             modifiedBoard.change();
@@ -135,12 +131,10 @@ class AlphaBetaAdvanced {
         }
 
         if (indexOfBestMove != null) {
-            System.out.println("move to :" + indexOfBestMove);
             board.put(indexOfBestMove);
             board.change();
             perfectCoordinate = indexOfBestMove;
         }
-        System.out.println("min beta: "+ beta);
         return (int)beta;
     }
 
@@ -159,9 +153,9 @@ class AlphaBetaAdvanced {
 
         Color opponent = (player == Color.XS) ? Color.OS : Color.XS;
 
-        if (board.existTicTacToe() && board.take() == player) {
+        if (board.existTicTacToe() && board.getWinner() == player) {
             return 10 - currentPly;
-        } else if (board.existTicTacToe() && board.take() == opponent) {
+        } else if (board.existTicTacToe() && board.getWinner() == opponent) {
             return -10 + currentPly;
         } else {
             return 0;

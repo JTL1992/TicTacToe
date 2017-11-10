@@ -96,13 +96,13 @@ public class Coordinate implements Serializable{
 		return coordinate.getColumn();
 	}
 	
-//	@Override
-//	public String toString(){
-//		return "[" + (coordinate.getRow()) + ", " + (coordinate.getColumn()) + "]";
-//	}
-@Override
-public String toString(){
-	return "" + (coordinate.getRow()*2 + coordinate.getColumn());
+	@Override
+	public String toString(){
+		return "[" + (coordinate.getRow()) + ", " + (coordinate.getColumn()) + "]";
+	}
 }
-	
-}
+//@Override
+//public String toString(){
+//	return "" + (coordinate.getRow()*2 + coordinate.getColumn());
+//}
+

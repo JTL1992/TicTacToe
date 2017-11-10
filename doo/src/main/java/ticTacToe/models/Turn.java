@@ -9,6 +9,10 @@ class Turn implements Serializable {
 	public Turn() {
 		value = 0;
 	}
+
+    public void reset() {
+        value = 0;
+    }
 	
     public Color take() {
         return Color.values()[value];

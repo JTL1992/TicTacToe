@@ -13,6 +13,7 @@ public class LocalContinueController extends LocalOperationController implements
 	
 	public LocalContinueController(Observer observer, Game game) {
 		super(game);
+		game.reset();
 		subject = new Subject();
 		subject.register(observer);
 	}

@@ -16,6 +16,8 @@ class Board extends Subject implements Serializable {
 	
 	private boolean existTicTacToe;
 
+    private Color winner = Color.NONE;
+
 	Board(int numPlayers) {
 		assert numPlayers > 0;
 		coordinates = new HashMap<>();
@@ -47,7 +49,7 @@ class Board extends Subject implements Serializable {
 	boolean existTicTacToe() {
 		return existTicTacToe;
 	}
-	
+
 	private boolean existTicTacToe(Color color) {
 		assert color != Color.NONE;
 		Set<Coordinate> coordinateSet = coordinates.get(color);
@@ -78,18 +80,24 @@ class Board extends Subject implements Serializable {
 	}
 
 	void put(Coordinate coordinate, Color color) {
-		assert coordinate != null;
+        if (existTicTacToe) {
+            this.end();
+        }
+
+		if (coordinate == null)
+            return;
 		assert color != Color.NONE;
 		assert color != null;
-		coordinates.get(color).add(coordinate.clone());
-		existTicTacToe = this.existTicTacToe(color);
-		if (existTicTacToe) {
-			this.end();
-		}
-		else if (this.complete()){
-			this.end();
-		}
-	}
+        coordinates.get(color).add(coordinate.clone());
+        existTicTacToe = this.existTicTacToe(color);
+        if (existTicTacToe) {
+            winner = color;
+            this.end();
+        }else if (this.complete()){
+            winner = Color.NONE;
+            this.end();
+        }
+    }
 
 	void remove(Coordinate coordinate, Color color) {
 		assert coordinate != null;
@@ -135,5 +143,9 @@ class Board extends Subject implements Serializable {
 		}
 		return playerCoordinates;
 	}
+
+    public Color getWinner() {
+        return this.winner;
+    }
 
 }

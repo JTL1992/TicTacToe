@@ -31,7 +31,6 @@ public class MiniMax {
 
         MiniMax.maxPly = maxPly;
         int score = miniMax(color, game, 0);
-        System.out.println("score: "+score);
     }
 
     /**
@@ -42,13 +41,20 @@ public class MiniMax {
      * @return              the score of the board
      */
     private static int miniMax (Color color, Game game, int currentPly) {
-        if (currentPly++ == maxPly || game.existTicTacToe()) {
-            return score(color, game);
+        if (currentPly++ == maxPly || game.existTicTacToe() || game.complete()) {
+            int score = score(color, game);
+//            System.out.println("<------score------>:"+score);
+//            System.out.println("<------max currentPly------>:"+currentPly);
+            return score;
         }
 
         if (game.take() == color) {
+//            System.out.println("<------max turn player------>:"+game.take());
+//            System.out.println("<------max currentPly------>:"+currentPly);
             return getMax(color, game, currentPly);
         } else {
+//            System.out.println("<------min turn player------>:"+game.take());
+//            System.out.println("<------min currentPly------>:"+currentPly);
             return getMin(color, game, currentPly);
         }
 
@@ -63,13 +69,13 @@ public class MiniMax {
      */
     private static int getMax (Color color, Game game, int currentPly) {
         double bestScore = Double.NEGATIVE_INFINITY;
-        Coordinate coorOfBestMove = new Coordinate(-1, -1);
+        Coordinate coorOfBestMove = null;
 
         for (Coordinate coordinate : game.emptyCoordinates()) {
 
             Game newGame = game.deepClone();
             newGame.put(coordinate);
-
+            newGame.change();
             int score = miniMax(color, newGame, currentPly);
 
             if (score >= bestScore) {
@@ -79,7 +85,9 @@ public class MiniMax {
 
         }
         perfectCoordinate = coorOfBestMove;
-        //game.put(coorOfBestMove);
+        game.put(coorOfBestMove);
+        game.change();
+//        System.out.println("<------max index of best move------>:"+perfectCoordinate);
         return (int)bestScore;
     }
 
@@ -92,13 +100,13 @@ public class MiniMax {
      */
     private static int getMin (Color color, Game game, int currentPly) {
         double bestScore = Double.POSITIVE_INFINITY;
-        Coordinate coorOfBestMove = new Coordinate(-1, -1);
+        Coordinate coorOfBestMove = null;
 
         for (Coordinate theMove : game.emptyCoordinates()) {
 
             Game modifiedBoard = game.deepClone();
             modifiedBoard.put(theMove);
-
+            modifiedBoard.change();
             int score = miniMax(color, modifiedBoard, currentPly);
 
             if (score <= bestScore) {
@@ -108,7 +116,9 @@ public class MiniMax {
 
         }
         perfectCoordinate = coorOfBestMove;
-        //game.put(coorOfBestMove);
+        game.put(coorOfBestMove);
+        game.change();
+//        System.out.println("<------min index of best move------>:"+perfectCoordinate);
         return (int)bestScore;
     }
 
@@ -125,14 +135,13 @@ public class MiniMax {
 
         Color opponent = (color == Color.XS) ? Color.OS : Color.XS;
 
-        if (game.existTicTacToe() && game.take() == color) {
+        if (game.existTicTacToe() && game.getWinner() == color) {
             return 10;
-        } else if (game.existTicTacToe() && game.take() == opponent) {
+        } else if (game.existTicTacToe() && game.getWinner() == opponent) {
             return -10;
         } else {
             return 0;
         }
     }
-
 
 }
