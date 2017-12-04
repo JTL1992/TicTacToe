@@ -155,7 +155,7 @@ class AlphaBetaAdvanced {
 
         if (board.existTicTacToe() && board.getWinner() == player) {
             return 10 - currentPly;
-        } else if (board.existTicTacToe() && board.getWinner() == opponent) {
+        } else if (board.existTicTacToe()) {
             return -10 + currentPly;
         } else {
             return 0;

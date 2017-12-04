@@ -61,7 +61,7 @@ class Board extends Subject implements Serializable {
 			for (int j = i + 1; j < coordinateSet.size()-1; j++) {
 				Direction direction = coordinateArray[i].direction(coordinateArray[j]);
 				if (direction != Direction.NON_EXISTENT) {
-                    for (int k = j+1; k < coordinateSet.size(); k++) {
+                    for (int k = i + 1; k < coordinateSet.size(); k++) {
                         Direction subDirection = coordinateArray[j].direction(coordinateArray[k]);
                         if (direction == subDirection) {
                             return true;
